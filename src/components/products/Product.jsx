@@ -4,9 +4,11 @@ import useProductDetails from './../../hooks/userProductDetails';
 import { useParams } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { Rating } from '@mui/material';
+import useAddToCart from '../../hooks/useAddToCart';
 
 export default function Product() {
      const { productId } = useParams();
+     const {mutate : addToCart} =useAddToCart();
     const {data, isLoading, isError, error} = useProductDetails(productId);
     console.log(data);
     if(isLoading) return <CircularProgress/>
@@ -49,6 +51,7 @@ export default function Product() {
         variant="contained"
         color="secondary"
         sx={{ borderRadius: "8px", fontWeight: "bold", px: 4, mb: 4 }}
+        onClick={() => addToCart({ productId: data.response.id, count: 1 })}
       >
         اضف للسلة
       </Button>

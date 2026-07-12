@@ -6,6 +6,7 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import Cart from './pages/cart/Cart';
 import Product from './components/products/Product';
+import ProtectedRouter from './ProtectedRouter';
 
 const router = createBrowserRouter([
     {
@@ -34,7 +35,9 @@ const router = createBrowserRouter([
             },
             {
                 path: 'cart',
-                element:<Cart />
+                element:<ProtectedRouter>
+                    <Cart />
+                </ProtectedRouter>
             }
         ]
     }

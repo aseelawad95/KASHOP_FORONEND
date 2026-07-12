@@ -5,8 +5,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginSchems } from "../../validations/LoginSchems";
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 export default function Login() {
+  const navigate = useNavigate();
   const [serverErrors, setServerErrors] = useState([]);
   const { register: login, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(LoginSchems),
@@ -16,10 +17,12 @@ export default function Login() {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BURL}/auth/Account/Login`,
-        data
+        data,
+
       );
       console.log(response);
       localStorage.setItem("accessToken",response.data.accessToken);
+      navigate('/');
     } catch (e) {
       console.log(e.response?.data?.errors);
       setServerErrors(e.response?.data?.errors || []);
